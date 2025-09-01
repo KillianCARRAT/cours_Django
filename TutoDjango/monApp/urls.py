@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     # Page Home
-    path("", views.homeBase, name="home"),
+    path("", views.home, name="home"),
     path('home/<str:param>', views.home, name='home'),
 
     # Page autre
