@@ -9,6 +9,10 @@ urlpatterns = [
     # Page autre
     path("contact", views.contact, name="contact us"),
     path("about", views.about, name="about us"),
+
+    path("produits", views.listProduits, name="liste produits"),
+    path("categories", views.listCategories, name="liste categories"),
+    path("status", views.listStatus, name="liste status"),
     
 
 ]
