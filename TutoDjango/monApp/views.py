@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Produit, Categorie, Status
+from .models import Produit, Categorie, Statut
 
 # Create your views here.
 from django.http import HttpResponse
@@ -30,7 +30,7 @@ def listCategories(request):
     return HttpResponse("<h1>Liste des categories</h1>" + cats)
 
 def listStatus(request):
-    status = Status.objects.all()
+    status = Statut.objects.all()
     sts = "<ul>"
     for s in status:
         sts += "<li>" + s.__str__() + "</li>" 
