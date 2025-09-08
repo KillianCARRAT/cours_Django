@@ -21,7 +21,7 @@ def listCategories(request):
     return render(request, 'monApp/list_categorie.html', {'categories': Categorie.objects.all()})
 
 def listStatus(request):
-    return render(request, 'monApp/list_statut.html', {'status': Statut.objects.all()})
+    return render(request, 'monApp/list_statut.html', {'statuts': Statut.objects.all()})
 
 def listRayons(request):
     return render(request, 'monApp/list_rayon.html', {'rayons': Rayon.objects.all()})
