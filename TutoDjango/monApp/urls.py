@@ -13,6 +13,7 @@ urlpatterns = [
     path("produits", views.listProduits, name="liste produits"),
     path("categories", views.listCategories, name="liste categories"),
     path("status", views.listStatus, name="liste status"),
+    path("rayons", views.listRayons, name="liste rayons"),
     
 
 ]

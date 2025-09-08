@@ -1,0 +1,19 @@
+<html>
+
+<head>
+    <title>Mon app DJANGO</title>
+</head>
+
+<body>
+    <h1>Hello mes categories !</h1>
+    <p>J'ai {{categories | length}} categorie{% if categories|length > 1%}s{%endif%}{% if categories|length > 0%}, qui
+        sont :</p>
+    <ul>
+        {% for categorie in categories %}
+        <li>{{ categorie.nomCat | upper }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}</p>{% endif %}
+</body>
+
+</html>

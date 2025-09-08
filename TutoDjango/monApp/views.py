@@ -1,38 +1,27 @@
 from django.shortcuts import render
-from .models import Produit, Categorie, Statut
+from .models import Produit, Categorie, Statut, Rayon
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 def home(request, param=""):
     return HttpResponse("<h1>Hello " + ("Django" if param == "" else param) + "!</h1>")
 
+
 def contact(request):
-    return HttpResponse("<h1>Contact Us</h1>")
+    return render(request, 'monApp/contact.html')
 
 def about(request):
-    return HttpResponse("<h1>About Us</h1>")
+    return render(request, 'monApp/about.html')
 
 def listProduits(request):
-    produits = Produit.objects.all()
-    prdts = "<ul>"
-    for prod in produits:
-        prdts += "<li>" + prod.__str__() + "</li>" 
-    prdts += "</ul>"
-    return HttpResponse("<h1>Liste des porduits</h1>" + prdts)
+    return render(request, 'monApp/list_produits.html', {'produits': Produit.objects.all()})
 
 def listCategories(request):
-    categories = Categorie.objects.all()
-    cats = "<ul>"
-    for cat in categories:
-        cats += "<li>" + cat.__str__() + "</li>" 
-    cats += "</ul>"
-    return HttpResponse("<h1>Liste des categories</h1>" + cats)
+    return render(request, 'monApp/list_categorie.html', {'categories': Categorie.objects.all()})
 
 def listStatus(request):
-    status = Statut.objects.all()
-    sts = "<ul>"
-    for s in status:
-        sts += "<li>" + s.__str__() + "</li>" 
-    sts += "</ul>"
-    return HttpResponse("<h1>Liste des status</h1>" + sts)
+    return render(request, 'monApp/list_statut.html', {'status': Statut.objects.all()})
+
+def listRayons(request):
+    return render(request, 'monApp/list_rayon.html', {'rayons': Rayon.objects.all()})

@@ -1,0 +1,15 @@
+{% extends 'monApp/base.html' %}
+{% block contenu %}
+<h1>Hello les produits !</h1>
+<p>
+    J'ai
+    {% if produits|length < 5 %} peu de {% elif produits|length < 10 %} quelques {% else %} beaucoup de {% endif %} produits
+    préférés.
+</p>
+<p>Mes produits préférés sont :</p>
+<ul>
+    {% for prdct in produits %}
+    <li>{{ prdct.intituleProd|upper }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

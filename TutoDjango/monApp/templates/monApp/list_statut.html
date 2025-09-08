@@ -1,0 +1,18 @@
+<html>
+
+<head>
+    <title>Mon app DJANGO</title>
+</head>
+
+<body>
+    <h1>Hello mes statuts !</h1>
+    <p>J'ai {{statuts | length}} statut{% if statuts|length > 1%}s{%endif%}{% if statuts|length > 0%}, qui sont :</p>
+    <ul>
+        {% for statut in statuts %}
+        <li>{{ statut.intituleProd | upper }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}.</p>{% endif %}
+</body>
+
+</html>

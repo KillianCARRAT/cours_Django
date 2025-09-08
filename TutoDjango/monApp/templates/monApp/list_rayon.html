@@ -1,0 +1,19 @@
+<html>
+
+<head>
+    <title>Mon app DJANGO</title>
+</head>
+
+<body>
+    <h1>Hello mes rayons !</h1>
+    <p>J'ai {{rayons | length}} rayon{% if rayons|length > 1%}s{%endif%}{% if rayons|length > 0%}, qui
+        sont :</p>
+    <ul>
+        {% for rayon in rayons %}
+        <li>{{ rayon.nomRayon | upper }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}</p>{% endif %}
+</body>
+
+</html>
