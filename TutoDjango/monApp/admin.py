@@ -20,16 +20,18 @@ class ProduitFilter(admin.SimpleListFilter):
             return queryset.filter(status=0)
 
 def set_Produit_online(modeladmin, request, queryset):
-    queryset.update(status=1)
+    queryset.update(status=2)
     set_Produit_online.short_description = "Mettre en ligne"
 
 def set_Produit_offline(modeladmin, request, queryset):
-    queryset.update(status=0)
+    queryset.update(status=1)
     set_Produit_offline.short_description = "Mettre hors ligne"
     
+from decimal import Decimal, ROUND_HALF_UP
+
 class ProduitAdmin(admin.ModelAdmin):
     model = Produit
-    list_display = ["refProd", "intituleProd", "prixUnitaireProd", "dateFabProd", "categorie", "status"]
+    list_display = ["refProd", "intituleProd", "prixUnitaireProd", "prixTTCProd", "dateFabProd", "categorie", "status"]
     list_editable = ["intituleProd", "prixUnitaireProd"]
     radio_fields = {"status": admin.VERTICAL}
     search_fields = ('intituleProd', 'dateFabProd')
@@ -37,6 +39,10 @@ class ProduitAdmin(admin.ModelAdmin):
     date_hierarchy = 'dateFabProd'
     ordering = ('-dateFabProd',)
     actions = [set_Produit_online, set_Produit_offline]
+
+    def prixTTCProd(self, instance):
+        return (instance.prixUnitaireProd * Decimal('1.20')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    prixTTCProd.short_description = "Prix TTC"
 
 class ProduitInline(admin.TabularInline):
     model = Produit
