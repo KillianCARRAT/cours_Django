@@ -52,3 +52,9 @@ class ContactView(TemplateView):
 
     def post(self, request, **kwargs):
         return render(request, self.template_name)
+
+
+class ProduitListView(ListView):
+    model = Produit
+    template_name = "monApp/list_produits.html"
+    context_object_name = "prdts"
