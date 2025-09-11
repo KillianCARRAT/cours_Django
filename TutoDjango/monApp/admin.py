@@ -21,11 +21,11 @@ class ProduitFilter(admin.SimpleListFilter):
 
 def set_Produit_online(modeladmin, request, queryset):
     queryset.update(status=2)
-    set_Produit_online.short_description = "Mettre en ligne"
+set_Produit_online.short_description = "Mettre en ligne"
 
 def set_Produit_offline(modeladmin, request, queryset):
     queryset.update(status=1)
-    set_Produit_offline.short_description = "Mettre hors ligne"
+set_Produit_offline.short_description = "Mettre hors ligne"
     
 from decimal import Decimal, ROUND_HALF_UP
 
@@ -56,5 +56,5 @@ admin.site.register(Produit, ProduitAdmin)
 
 admin.site.register(Statut)
 admin.site.register(Rayon)
-admin.site.register(Categorie)
+admin.site.register(Categorie, CategorieAdmin)
 admin.site.register(Contenir)
