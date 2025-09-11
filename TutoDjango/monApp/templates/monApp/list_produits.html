@@ -1,6 +1,6 @@
 {% extends 'monApp/base.html' %}
 {% block menu %}
-<h1>Liste des produits</h1>
+{{titremenu}}
 {% endblock %}
 {% block contenu %}
 <table class="table">
@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         {% for prdt in produits %}
-        <tr>
+        <tr onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">
             <td>{{ prdt.refProd }} </td>
             <td>{{ prdt.intituleProd }} </td>
             <td>{{ prdt.prixUnitaireProd }} </td>

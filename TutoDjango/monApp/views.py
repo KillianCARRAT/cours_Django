@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Produit, Categorie, Statut, Rayon
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
 
 # Create your views here.
 from django.http import HttpResponse, Http404
@@ -57,4 +57,23 @@ class ContactView(TemplateView):
 class ProduitListView(ListView):
     model = Produit
     template_name = "monApp/list_produits.html"
-    context_object_name = "prdts"
+    context_object_name = "produits"
+
+    def get_queryset(self ) :
+        return Produit.objects.order_by("prixUnitaireProd")
+
+    def get_context_data(self, **kwargs):
+        context = super(ProduitListView, self).get_context_data(**kwargs)
+        context['titremenu'] = "Liste de mes produits"
+        return context
+
+class ProduitDetailView(DetailView):
+    model = Produit
+    template_name = "monApp/detail_produit.html"
+    context_object_name = "prdt"
+
+    def get_context_data(self, **kwargs):
+        context = super(ProduitDetailView, self).get_context_data(**kwargs)
+        context['titremenu'] = "Détail du produit"
+        return context
+

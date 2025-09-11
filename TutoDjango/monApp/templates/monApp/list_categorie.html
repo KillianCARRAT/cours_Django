@@ -10,7 +10,7 @@
     </thead>
     <tbody>
         {% for categorie in categories %}
-        <tr>
+        <tr onclick="window.location.href='{% url 'dtl_categorie' categorie.idCat %}';" style="cursor:pointer;">
             <td>{{ categorie.idCat }} </td>
             <td>{{ categorie.nomCat }} </td>
         </tr>
