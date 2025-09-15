@@ -1,6 +1,6 @@
 {% extends 'monApp/base.html' %}
 {% block menu %}
-<h1>Liste des rayons</h1>
+<h1>{{titremenu}}</h1>
 {% endblock %}
 {% block contenu %}
 <table class="table">
@@ -10,7 +10,7 @@
     </thead>
     <tbody>
         {% for rayon in rayons %}
-        <tr>
+        <tr onclick="window.location.href='{% url 'dtl_rayon' rayon.idRayon %}';" style="cursor:pointer;">
             <td>{{ rayon.idRayon }} </td>
             <td>{{ rayon.nomRayon }} </td>
         </tr>

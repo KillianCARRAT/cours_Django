@@ -1,6 +1,6 @@
 {% extends 'monApp/base.html' %}
 {% block menu %}
-<h1>Liste des statuts</h1>
+<h1>{{titremenu}}</h1>
 {% endblock %}
 {% block contenu %}
 <table class="table">
@@ -10,7 +10,7 @@
     </thead>
     <tbody>
         {% for statut in statuts %}
-        <tr>
+        <tr onclick="window.location.href='{% url 'dtl_statut' statut.idStatus %}';" style="cursor:pointer;">
             <td>{{ statut.idStatus }} </td>
             <td>{{ statut.libelleStatus }} </td>
         </tr>

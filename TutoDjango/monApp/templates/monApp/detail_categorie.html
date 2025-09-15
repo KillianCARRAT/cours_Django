@@ -3,13 +3,9 @@
 <h1>{{titremenu}}</h1>
 {% endblock %}
 {% block contenu %}
-<p onclick="window.location.href='{% url 'lst_prdts' %}';" style="cursor:pointer; ">Retour à la liste des produits</p>
-<h2>{{ prdt.intituleProd }}</h2>
+<p onclick="window.location.href='{% url 'lst_categories' %}';" style="cursor:pointer; ">Retour à la liste des categories</p>
+<h2>{{ categorie.nomCat }}</h2>
 <ul>
-<li>Référence produit : {{prdt.refProd }} </li>
-<li>Prix unitaire HT : {{ prdt.prixUnitaireProd }} </li>
-<li>Date de fabrication : {{ prdt.dateFabProd }} </li>
-<li>Catégorie : {{ prdt.categorie }} </li>
-<li>Statut : {{ prdt.status }}</li>
+<li>Référence categorie : {{categorie.idCat }} </li>
 </ul>
 {% endblock %}
