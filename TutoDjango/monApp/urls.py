@@ -14,6 +14,7 @@ urlpatterns = [
 
     path("produits/",views.ProduitListView.as_view(), name="lst_prdts"),
     path("produit/<int:pk>/",views.ProduitDetailView.as_view(), name="dtl_prdt"),
+    path("produit/",views.ProduitCreate, name="crt_prdt"),
 
     path("categories/",views.CategorieListView.as_view(), name="lst_categories"),
     path("categories/<int:pk>/",views.CategorieDetailView.as_view(), name="dtl_categorie"),

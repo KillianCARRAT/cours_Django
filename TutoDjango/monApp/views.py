@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Produit, Categorie, Statut, Rayon
-from .forms import ContactUsForm
+from .forms import ContactUsForm, ProduitForm
 
 from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib.auth.views import LoginView
@@ -203,3 +203,13 @@ class DisconnectView(TemplateView):
     def get(self, request, **kwargs):
         logout(request)
         return render(request, self.template_name)
+
+def ProduitCreate(request):
+    if request.method == 'POST':
+        form = ProduitForm(request.POST)
+        if form.is_valid():
+            prdt = form.save()
+            return redirect('dtl_prdt', prdt.refProd)
+    else:
+        form = ProduitForm()
+    return render(request, "monApp/create_produit.html", {'form': form})

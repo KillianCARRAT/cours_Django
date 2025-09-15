@@ -25,8 +25,5 @@
         {% endfor %}
     </tbody>
 </table>
-<p>
-    J'ai
-    {% if produits|length < 5 %} peu de {% elif produits|length < 10 %} quelques {% else %} beaucoup de {% endif %} produits
-        préférés. </p>
-        {% endblock %}
+<button onclick="window.location.href='{% url 'crt_prdt' %}';" class="btn btn-primary mt-2">Créer un produit</button>
+{% endblock %}
