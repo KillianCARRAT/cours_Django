@@ -9,7 +9,8 @@ urlpatterns = [
     path("home/<str:param>", views.HomeView.as_view()),
 
     path("about/", views.AboutView.as_view()),
-    path("contact/", views.ContactView.as_view()),
+    path("contact/", views.ContactView, name="contact"),
+    path("email-sent/", views.EmailSentView.as_view(), name="email-sent"),
 
     path("produits/",views.ProduitListView.as_view(), name="lst_prdts"),
     path("produit/<int:pk>/",views.ProduitDetailView.as_view(), name="dtl_prdt"),

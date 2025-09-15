@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Produit, Categorie, Statut, Rayon
-from django.views.generic import TemplateView, ListView, DetailView
+from .forms import ContactUsForm
 
+from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+
+from django.core.mail import send_mail
 
 # Create your views here.
 from django.http import HttpResponse, Http404
@@ -46,12 +49,31 @@ class AboutView(TemplateView):
         return render(request, self.template_name)
 
 
-class ContactView(TemplateView):
+
+
+def ContactView(request):
+    titreh1 = "Contact us !"
+    if request.method == 'POST':
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            send_mail(
+                subject=f'Message from {form.cleaned_data["name"] or "anonyme"} via MonProjet Contact Us form',
+                message=form.cleaned_data['message'],
+                from_email=form.cleaned_data['email'],
+                recipient_list=['admin@monprojet.com'],
+            )
+            return redirect('email-sent')
+    else:
+        form = ContactUsForm()
+    return render(request, "monApp/page_home.html", {'titreh1': titreh1, 'form': form})
+
+class EmailSentView(TemplateView):
     template_name = "monApp/page_home.html"
 
     def get_context_data(self, **kwargs):
-        context = super(ContactView, self).get_context_data(**kwargs)
-        context['titreh1'] = "Contact us..."
+        context = super(EmailSentView, self).get_context_data(**kwargs)
+        context['titreh1'] = "Contact"
+        context['message'] = "E-mail envoyé avec succès"
         return context
 
     def post(self, request, **kwargs):
