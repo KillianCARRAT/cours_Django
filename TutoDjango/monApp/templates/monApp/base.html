@@ -1,5 +1,7 @@
 <!doctype html>
 {% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
 <html lang="fr">
 
 <head>
@@ -7,7 +9,7 @@
     <title>Mon app DJANGO</title>
     {% block styles %}
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
-    <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    
     {% endblock %}
 </head>
 

@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='produit',
             name='dateFab',
-            field=models.DateTimeField(db_default='2015-06-15 14:30:50'),
+            field=models.DateTimeField(default='2015-06-15 14:30:50'),
         ),
         migrations.AlterField(
             model_name='contenir',

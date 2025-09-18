@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='produit',
             name='dateFab',
-            field=models.DateTimeField(db_default=django.db.models.functions.datetime.Now()),
+            field=models.DateTimeField(default=django.db.models.functions.datetime.Now()),
         ),
     ]
