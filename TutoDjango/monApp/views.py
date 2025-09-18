@@ -3,9 +3,12 @@ from .models import Produit, Categorie, Statut, Rayon
 from .forms import ContactUsForm, ProduitForm
 
 from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.forms import BaseModelForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 from django.core.mail import send_mail
 
@@ -13,16 +16,16 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, Http404
 
 def listProduits(request):
-    return render(request, 'monApp/list_produits.html', {'produits': Produit.objects.all()})
+    return render(request, 'monApp/Read/list/produits.html', {'produits': Produit.objects.all()})
 
 def listCategories(request):
-    return render(request, 'monApp/list_categorie.html', {'categories': Categorie.objects.all()})
+    return render(request, 'monApp/Read/list/categories.html', {'categories': Categorie.objects.all()})
 
 def listStatus(request):
-    return render(request, 'monApp/list_statut.html', {'statuts': Statut.objects.all()})
+    return render(request, 'monApp/Read/list/statuts.html', {'statuts': Statut.objects.all()})
 
 def listRayons(request):
-    return render(request, 'monApp/list_rayon.html', {'rayons': Rayon.objects.all()})
+    return render(request, 'monApp/Read/list/rayons.html', {'rayons': Rayon.objects.all()})
 
 
 # Vue généric
@@ -82,7 +85,7 @@ class EmailSentView(TemplateView):
 
 class ProduitListView(ListView):
     model = Produit
-    template_name = "monApp/list_produits.html"
+    template_name = "monApp/Read/list/produits.html"
     context_object_name = "produits"
 
     def get_queryset(self) :
@@ -95,7 +98,7 @@ class ProduitListView(ListView):
 
 class ProduitDetailView(DetailView):
     model = Produit
-    template_name = "monApp/detail_produit.html"
+    template_name = "monApp/Read/detail/produit.html"
     context_object_name = "prdt"
 
     def get_context_data(self, **kwargs):
@@ -106,7 +109,7 @@ class ProduitDetailView(DetailView):
 
 class CategorieListView(ListView):
     model = Categorie
-    template_name = "monApp/list_categories.html"
+    template_name = "monApp/Read/list/categories.html"
     context_object_name = "categories"
 
 
@@ -117,7 +120,7 @@ class CategorieListView(ListView):
 
 class CategorieDetailView(DetailView):
     model = Categorie
-    template_name = "monApp/detail_categorie.html"
+    template_name = "monApp/Read/detail/categorie.html"
     context_object_name = "categorie"
 
     def get_context_data(self, **kwargs):
@@ -127,7 +130,7 @@ class CategorieDetailView(DetailView):
 
 class RayonListView(ListView):
     model = Rayon
-    template_name = "monApp/list_rayons.html"
+    template_name = "monApp/Read/list/rayons.html"
     context_object_name = "rayons"
 
 
@@ -138,7 +141,7 @@ class RayonListView(ListView):
 
 class RayonDetailView(DetailView):
     model = Rayon
-    template_name = "monApp/detail_rayon.html"
+    template_name = "monApp/Read/detail/rayon.html"
     context_object_name = "rayon"
 
     def get_context_data(self, **kwargs):
@@ -148,7 +151,7 @@ class RayonDetailView(DetailView):
 
 class StatutListView(ListView):
     model = Statut
-    template_name = "monApp/list_statuts.html"
+    template_name = "monApp/Read/list/statuts.html"
     context_object_name = "statuts"
 
 
@@ -159,7 +162,7 @@ class StatutListView(ListView):
 
 class StatutDetailView(DetailView):
     model = Statut
-    template_name = "monApp/detail_statut.html"
+    template_name = "monApp/Read/detail/statut.html"
     context_object_name = "statut"
 
     def get_context_data(self, **kwargs):
@@ -204,12 +207,102 @@ class DisconnectView(TemplateView):
         logout(request)
         return render(request, self.template_name)
 
-def ProduitCreate(request):
-    if request.method == 'POST':
-        form = ProduitForm(request.POST)
-        if form.is_valid():
-            prdt = form.save()
-            return redirect('dtl_prdt', prdt.refProd)
-    else:
-        form = ProduitForm()
-    return render(request, "monApp/create_produit.html", {'form': form})
+# Views CRUD
+# Views CREATE
+class ProduitCreateView(CreateView):
+    model = Produit
+    form_class=ProduitForm
+    template_name = "monApp/Create/produit.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        prdt = form.save()
+        return redirect('dtl_prdt', pk=prdt.refProd)
+
+
+class CategorieCreateView(CreateView):
+    model = Categorie
+    fields = ['libelleCat']
+    template_name = "monApp/Create/categorie.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        cat = form.save()
+        return redirect('dtl_cat', pk=cat.id)
+
+class RayonCreateView(CreateView):
+    model = Rayon
+    fields = ['libelleRay']
+    template_name = "monApp/Create/rayon.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        ray = form.save()
+        return redirect('dtl_ray', pk=ray.id)
+
+class StatutCreateView(CreateView):
+    model = Statut
+    fields = ['libelleStat']
+    template_name = "monApp/Create/statut.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        stat = form.save()
+        return redirect('dtl_stat', pk=stat.id)
+
+
+# Views UPDATE
+class ProduitUpdateView(UpdateView):
+    model = Produit
+    form_class=ProduitForm
+    template_name = "monApp/Update/produit.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        prdt = form.save()
+        return redirect('dtl_prdt', prdt.refProd)
+
+
+class CategorieUpdateView(UpdateView):
+    model = Categorie
+    fields = ['libelleCat']
+    template_name = "monApp/Update/categorie.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        cat = form.save()
+        return redirect('dtl_categorie', pk=cat.id)
+
+class RayonUpdateView(UpdateView):
+    model = Rayon
+    fields = ['libelleRay']
+    template_name = "monApp/Update/rayon.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        ray = form.save()
+        return redirect('dtl_rayon', pk=ray.id)
+
+class StatutUpdateView(UpdateView):
+    model = Statut
+    fields = ['libelleStat']
+    template_name = "monApp/Update/statut.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        stat = form.save()
+        return redirect('dtl_statut', pk=stat.id)
+
+
+# Views DELETE
+class ProduitDeleteView(DeleteView):
+    model = Produit
+    template_name = "monApp/Delete/produit.html"
+    success_url = reverse_lazy('lst_prdts')
+
+class CategorieDeleteView(DeleteView):
+    model = Categorie
+    template_name = "monApp/Delete/categorie.html"
+    success_url = reverse_lazy('lst_categories')
+
+class RayonDeleteView(DeleteView):
+    model = Rayon
+    template_name = "monApp/Delete/rayon.html"
+    success_url = reverse_lazy('lst_rayons')
+
+class StatutDeleteView(DeleteView):
+    model = Statut
+    template_name = "monApp/Delete/statut.html"
+    success_url = reverse_lazy('lst_statuts')

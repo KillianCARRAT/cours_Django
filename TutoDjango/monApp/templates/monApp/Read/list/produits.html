@@ -1,0 +1,34 @@
+{% extends 'monApp/base.html' %}
+{% block menu %}
+<h1>{{titremenu}}</h1>
+{% endblock %}
+{% block contenu %}
+<table class="table">
+    <thead class="text-center">
+        <th>Id</th>
+        <th>Nom produit</th>
+        <th>Prix unitaire</th>
+        <th>Date fabrication</th>
+        <th>Catégorie</th>
+        <th>Statut</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        {% for prdt in produits %}
+        <tr class="text-center">
+            <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.refProd }}</td>
+            <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.intituleProd }}</td>
+            <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.prixUnitaireProd }}</td>
+            <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.dateFabProd }}</td>
+            <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.categorie }}</td>
+            <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.status }}</td>
+            <td>
+                <button onclick="window.location.href='{% url 'prdt_chng' prdt.refProd %}';" class="btn btn-warning">Modifier</button>
+                <button onclick="window.location.href='{% url 'dlt_prdt' prdt.refProd %}';" class="btn btn-danger">supprimer</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<button onclick="window.location.href='{% url 'crt_prdt' %}';" class="btn btn-primary mt-2">Créer un produit</button>
+{% endblock %}

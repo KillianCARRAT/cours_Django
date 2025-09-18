@@ -1,0 +1,25 @@
+{% extends 'monApp/base.html' %}
+{% block menu %}
+<h1>{{titremenu}}</h1>
+{% endblock %}
+{% block contenu %}
+<table class="table">
+    <thead>
+        <th>Id</th>
+        <th>Categorie</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        {% for categorie in categories %}
+        <tr>
+            <td onclick="window.location.href='{% url 'dtl_categorie' categorie.idCat %}';" style="cursor:pointer;">{{ categorie.idCat }} </td>
+            <td onclick="window.location.href='{% url 'dtl_categorie' categorie.idCat %}';" style="cursor:pointer;">{{ categorie.nomCat }} </td>
+            <td>
+                <button onclick="window.location.href='{% url 'categorie_chng' categorie.idCat %}';" class="btn btn-warning">Modifier</button>
+                <button onclick="window.location.href='{% url 'dlt_categorie' categorie.idCat %}';" class="btn btn-danger">supprimer</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
