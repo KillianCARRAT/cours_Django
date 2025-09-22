@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 
 from django.core.mail import send_mail
+from django.db.models import Count
 
 # Create your views here.
 from django.http import HttpResponse, Http404
@@ -112,6 +113,9 @@ class CategorieListView(ListView):
     template_name = "monApp/Read/list/categories.html"
     context_object_name = "categories"
 
+    def get_queryset(self):
+        # Annoter chaque catégorie avec le nombre de produits liés
+        return Categorie.objects.annotate(nb_produits=Count('produits_categorie'))
 
     def get_context_data(self, **kwargs):
         context = super(CategorieListView, self).get_context_data(**kwargs)
@@ -123,9 +127,14 @@ class CategorieDetailView(DetailView):
     template_name = "monApp/Read/detail/categorie.html"
     context_object_name = "categorie"
 
+    def get_queryset(self):
+        # Annoter chaque catégorie avec le nombre de produits liés
+        return Categorie.objects.annotate(nb_produits=Count('produits_categorie'))
+
     def get_context_data(self, **kwargs):
         context = super(CategorieDetailView, self).get_context_data(**kwargs)
         context['titremenu'] = "Détail du catégorie"
+        context['prdts'] = self.object.produits_categorie.all()
         return context
 
 class RayonListView(ListView):
@@ -137,6 +146,13 @@ class RayonListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(RayonListView, self).get_context_data(**kwargs)
         context['titremenu'] = "Liste de mes rayons"
+        ryns_dt = []
+        for rayon in context['rayons']:
+            total = 0
+            for contenir in rayon.contenir_rayon.all():
+                total += contenir.produit.prixUnitaireProd * contenir.Qte
+            ryns_dt.append({'rayon': rayon,'total_stock': total})
+            context['rayons_dt'] = ryns_dt
         return context
 
 class RayonDetailView(DetailView):
@@ -147,6 +163,23 @@ class RayonDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(RayonDetailView, self).get_context_data(**kwargs)
         context['titremenu'] = "Détail du rayon"
+
+        prdts_dt = []
+        total_rayon = 0
+        total_nb_produit = 0
+        for contenir in self.object.contenir_rayon.all():
+            total_produit = contenir.produit.prixUnitaireProd * contenir.Qte
+            prdts_dt.append({ 'produit': contenir.produit,
+                                'qte': contenir.Qte,
+                                'prix_unitaire': contenir.produit.prixUnitaireProd,
+                                'total_produit': total_produit})
+            total_rayon += total_produit
+            total_nb_produit += contenir.Qte
+
+        context['prdts_dt'] = prdts_dt
+        context['total_rayon'] = total_rayon
+        context['total_nb_produit'] = total_nb_produit
+
         return context
 
 class StatutListView(ListView):

@@ -1,14 +1,58 @@
 {% extends 'monApp/base.html' %}
-{% block menu %}
-<h1>{{titremenu}}</h1>
-{% endblock %}
-{% block contenu %}
-<p onclick="window.location.href='{% url 'lst_rayons' %}';" style="cursor:pointer; ">Retour à la liste des rayons</p>
-<h2>{{ rayon.nomRayon }}</h2>
-<ul>
-<li>Référence rayon : {{rayon.idRayon }} </li>
 
-</ul>
-<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'rayon_chng' rayon.idRayon %}'">Modifier</button>
-<button onclick="window.location.href='{% url 'dlt_rayon' rayon.idRayon %}';" class="btn btn-danger">Supprimer</button>
+{% block menu %}
+    <h1>{{ titremenu }}</h1>
+{% endblock %}
+
+{% block contenu %}
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-header bg-dark text-white">
+            <h4>Détail du rayon</h4>
+        </div>
+        <div class="card-body bg-light">
+            <h5 class="card-title text-primary">{{ rayon.nomRayon }}</h5>
+            <ul class="list-unstyled">
+                <li><strong>Référence rayon :</strong> {{ rayon.idRayon }}</li>
+                <li><strong>Nom rayon :</strong> {{ rayon.nomRayon }}</li>
+            </ul>
+        </div>
+        <div class="card-footer text-center bg-white border-0">
+            <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{% url 'rayon_chng' rayon.idRayon %}'">Modifier</button>
+            <button onclick="window.location.href='{% url 'dlt_rayon' rayon.idRayon %}';" class="btn btn-outline-danger">Supprimer</button>
+        </div>
+    </div>
+
+    <div class="card mb-4 mt-2 shadow-sm border-0">
+        <div class="card-header bg-dark text-white">
+            <h4>
+                Ce rayon contient <strong>{{ total_nb_produit }}</strong> produit(s) pour un total de
+                <strong>{{ total_rayon|floatformat:2 }} €</strong>
+            </h4>
+        </div>
+        <div class="card-body bg-light">
+            <div class="row">
+                {% if prdts_dt %}
+                    {% for data in prdts_dt %}
+                        <div class="col-sm-3">
+                            <div class="card mb-2 text-center border-0 shadow-sm">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="card-title">{{ data.produit.intituleProd }}</h5>
+                                </div>
+                                <div class="card-body bg-white">
+                                    <ul class="list-unstyled">
+                                        <li>Prix unitaire : <span class="text-success">{{ data.prix_unitaire }} €</span></li>
+                                        <li>Quantité : <span class="text-secondary">{{ data.qte }}</span></li>
+                                        <li>Total : <span class="text-success">{{ data.total_produit }} €</span></li>
+                                    </ul>
+                                    <a href="{% url 'dtl_prdt' data.produit.refProd %}" class="btn btn-outline-primary mt-2">Détails</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">Aucun produit trouvé pour cette catégorie.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

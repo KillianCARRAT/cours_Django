@@ -7,6 +7,7 @@
     <thead>
         <th>Id</th>
         <th>Categorie</th>
+        <th>Nombre de Produits</th>
         <th>Actions</th>
     </thead>
     <tbody>
@@ -14,6 +15,7 @@
         <tr>
             <td onclick="window.location.href='{% url 'dtl_categorie' categorie.idCat %}';" style="cursor:pointer;">{{ categorie.idCat }} </td>
             <td onclick="window.location.href='{% url 'dtl_categorie' categorie.idCat %}';" style="cursor:pointer;">{{ categorie.nomCat }} </td>
+            <td onclick="window.location.href='{% url 'dtl_categorie' categorie.idCat %}';" style="cursor:pointer;">{{ categorie.nb_produits }} </td>
             <td>
                 <button onclick="window.location.href='{% url 'categorie_chng' categorie.idCat %}';" class="btn btn-warning">Modifier</button>
                 <button onclick="window.location.href='{% url 'dlt_categorie' categorie.idCat %}';" class="btn btn-danger">supprimer</button>

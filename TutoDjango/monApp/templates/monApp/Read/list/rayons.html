@@ -8,15 +8,17 @@
         <th>Id</th>
         <th>Nom rayon</th>
         <th>Actions</th>
+        <th>Valeur marchande du rayon</th>
     </thead>
     <tbody>
-        {% for rayon in rayons %}
+        {% for data in rayons_dt %}
         <tr>
-            <td onclick="window.location.href='{% url 'dtl_rayon' rayon.idRayon %}';" style="cursor:pointer;">{{ rayon.idRayon }} </td>
-            <td onclick="window.location.href='{% url 'dtl_rayon' rayon.idRayon %}';" style="cursor:pointer;">{{ rayon.nomRayon }} </td>
+            <td onclick="window.location.href='{% url 'dtl_rayon' data.rayon.idRayon %}';" style="cursor:pointer;">{{ data.rayon.idRayon }} </td>
+            <td onclick="window.location.href='{% url 'dtl_rayon' data.rayon.idRayon %}';" style="cursor:pointer;">{{ data.rayon.nomRayon }} </td>
+            <td onclick="window.location.href='{% url 'dtl_rayon' data.rayon.idRayon %}';" style="cursor:pointer;">{{ data.total_stock }} €</td>
             <td>
-                <button onclick="window.location.href='{% url 'rayon_chng' rayon.idRayon %}';" class="btn btn-warning">Modifier</button>
-                <button onclick="window.location.href='{% url 'dlt_rayon' rayon.idRayon %}';" class="btn btn-danger">supprimer</button>
+                <button onclick="window.location.href='{% url 'rayon_chng' data.rayon.idRayon %}';" class="btn btn-warning">Modifier</button>
+                <button onclick="window.location.href='{% url 'dlt_rayon' data.rayon.idRayon %}';" class="btn btn-danger">supprimer</button>
             </td>
         </tr>
         {% endfor %}
