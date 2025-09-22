@@ -7,14 +7,20 @@
     <thead>
         <th>Id</th>
         <th>Nom rayon</th>
+        <th>Actions</th>
     </thead>
     <tbody>
         {% for rayon in rayons %}
-        <tr onclick="window.location.href='{% url 'dtl_rayon' rayon.idRayon %}';" style="cursor:pointer;">
-            <td>{{ rayon.idRayon }} </td>
-            <td>{{ rayon.nomRayon }} </td>
+        <tr>
+            <td onclick="window.location.href='{% url 'dtl_rayon' rayon.idRayon %}';" style="cursor:pointer;">{{ rayon.idRayon }} </td>
+            <td onclick="window.location.href='{% url 'dtl_rayon' rayon.idRayon %}';" style="cursor:pointer;">{{ rayon.nomRayon }} </td>
+            <td>
+                <button onclick="window.location.href='{% url 'rayon_chng' rayon.idRayon %}';" class="btn btn-warning">Modifier</button>
+                <button onclick="window.location.href='{% url 'dlt_rayon' rayon.idRayon %}';" class="btn btn-danger">supprimer</button>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+<button onclick="window.location.href='{% url 'crt_rayon' %}';" class="btn btn-primary mt-2">Créer un rayon</button>
 {% endblock %}

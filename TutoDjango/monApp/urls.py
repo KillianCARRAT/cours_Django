@@ -29,17 +29,17 @@ urlpatterns = [
     path("rayons/",views.RayonListView.as_view(), name="lst_rayons"),
     path("rayon/<int:pk>/",views.RayonDetailView.as_view(), name="dtl_rayon"),
     path("rayon/",views.RayonCreateView.as_view(), name="crt_rayon"),
-    path("rayon/<int:pk>/update/",views.RayonUpdateView.as_view
+    path("rayon/<int:pk>/update/",views.RayonUpdateView.as_view()
             , name="rayon_chng"),
-    path("rayon/<int:pk>/delete/",views.RayonDeleteView.as_view
+    path("rayon/<int:pk>/delete/",views.RayonDeleteView.as_view()
             , name="dlt_rayon"),
 
     path("statuts/",views.StatutListView.as_view(), name="lst_statuts"),
     path("statut/<int:pk>/",views.StatutDetailView.as_view(), name="dtl_statut"),
     path("statut/",views.StatutCreateView.as_view(), name="crt_statut"),
-    path("statut/<int:pk>/update/",views.StatutUpdateView.as_view
+    path("statut/<int:pk>/update/",views.StatutUpdateView.as_view()
             , name="statut_chng"),
-    path("statut/<int:pk>/delete/",views.StatutDeleteView.as_view
+    path("statut/<int:pk>/delete/",views.StatutDeleteView.as_view()
             , name="dlt_statut"),
 
 

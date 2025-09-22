@@ -12,6 +12,6 @@
 <li>Catégorie : {{ prdt.categorie }} </li>
 <li>Statut : {{ prdt.status }}</li>
 </ul>
-<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'prdt_chng' prdt.refProd %}'">Modifier ce produit</button>
-<button onclick="window.location.href='{% url 'dlt_prdt' prdt.refProd %}';" class="btn btn-danger">supprimer</button>
+<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'prdt_chng' prdt.refProd %}'">Modifier</button>
+<button onclick="window.location.href='{% url 'dlt_prdt' prdt.refProd %}';" class="btn btn-danger">Supprimer</button>
 {% endblock %}

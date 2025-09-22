@@ -7,14 +7,20 @@
     <thead>
         <th>Id</th>
         <th>statut</th>
+        <th>Actions</th>
     </thead>
     <tbody>
         {% for statut in statuts %}
-        <tr onclick="window.location.href='{% url 'dtl_statut' statut.idStatus %}';" style="cursor:pointer;">
-            <td>{{ statut.idStatus }} </td>
-            <td>{{ statut.libelleStatus }} </td>
+        <tr>
+            <td onclick="window.location.href='{% url 'dtl_statut' statut.idStatus %}';" style="cursor:pointer;">{{ statut.idStatus }} </td>
+            <td onclick="window.location.href='{% url 'dtl_statut' statut.idStatus %}';" style="cursor:pointer;">{{ statut.libelleStatus }} </td>
+            <td>
+                <button onclick="window.location.href='{% url 'statut_chng' statut.idStatus %}';" class="btn btn-warning">Modifier</button>
+                <button onclick="window.location.href='{% url 'dlt_statut' statut.idStatus %}';" class="btn btn-danger">supprimer</button>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+<button onclick="window.location.href='{% url 'crt_statut' %}';" class="btn btn-primary mt-2">Créer un statut</button>
 {% endblock %}

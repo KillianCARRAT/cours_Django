@@ -9,4 +9,6 @@
 <li>Référence rayon : {{rayon.idRayon }} </li>
 
 </ul>
+<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'rayon_chng' rayon.idRayon %}'">Modifier</button>
+<button onclick="window.location.href='{% url 'dlt_rayon' rayon.idRayon %}';" class="btn btn-danger">Supprimer</button>
 {% endblock %}

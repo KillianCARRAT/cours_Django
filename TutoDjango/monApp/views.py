@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Produit, Categorie, Statut, Rayon
-from .forms import ContactUsForm, ProduitForm
+from .forms import *
 
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -221,30 +221,30 @@ class ProduitCreateView(CreateView):
 
 class CategorieCreateView(CreateView):
     model = Categorie
-    fields = ['libelleCat']
+    form_class = CategorieForm
     template_name = "monApp/Create/categorie.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         cat = form.save()
-        return redirect('dtl_cat', pk=cat.id)
+        return redirect('dtl_categorie', pk=cat.idCat)
 
 class RayonCreateView(CreateView):
     model = Rayon
-    fields = ['libelleRay']
+    form_class = RayonForm
     template_name = "monApp/Create/rayon.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         ray = form.save()
-        return redirect('dtl_ray', pk=ray.id)
+        return redirect('dtl_rayon', pk=ray.idRayon)
 
 class StatutCreateView(CreateView):
     model = Statut
-    fields = ['libelleStat']
+    form_class = StatutForm
     template_name = "monApp/Create/statut.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         stat = form.save()
-        return redirect('dtl_stat', pk=stat.id)
+        return redirect('dtl_statut', pk=stat.idStatus)
 
 
 # Views UPDATE
@@ -260,30 +260,30 @@ class ProduitUpdateView(UpdateView):
 
 class CategorieUpdateView(UpdateView):
     model = Categorie
-    fields = ['libelleCat']
+    form_class = CategorieForm
     template_name = "monApp/Update/categorie.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         cat = form.save()
-        return redirect('dtl_categorie', pk=cat.id)
+        return redirect('dtl_categorie', pk=cat.idCat)
 
 class RayonUpdateView(UpdateView):
     model = Rayon
-    fields = ['libelleRay']
+    form_class = RayonForm
     template_name = "monApp/Update/rayon.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         ray = form.save()
-        return redirect('dtl_rayon', pk=ray.id)
+        return redirect('dtl_rayon', pk=ray.idRayon)
 
 class StatutUpdateView(UpdateView):
     model = Statut
-    fields = ['libelleStat']
+    form_class = StatutForm
     template_name = "monApp/Update/statut.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         stat = form.save()
-        return redirect('dtl_statut', pk=stat.id)
+        return redirect('dtl_statut', pk=stat.idStatus)
 
 
 # Views DELETE
