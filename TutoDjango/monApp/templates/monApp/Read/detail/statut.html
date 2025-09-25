@@ -1,13 +1,50 @@
 {% extends 'monApp/base.html' %}
+
 {% block menu %}
-<h1>{{titremenu}}</h1>
+    <h1>{{ titremenu }}</h1>
 {% endblock %}
+
 {% block contenu %}
-<p onclick="window.location.href='{% url 'lst_statuts' %}';" style="cursor:pointer; ">Retour à la liste des status</p>
-<h2>{{ statut.libelleStatus }}</h2>
-<ul>
-<li>Référence statut : {{ statut.idStatus }} </li>
-</ul>
-<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'statut_chng' statut.idStatus %}'">Modifier</button>
-<button onclick="window.location.href='{% url 'dlt_statut' statut.idStatus %}';" class="btn btn-danger">Supprimer</button>
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-header bg-dark text-white">
+            <h4>Détail du statut</h4>
+        </div>
+        <div class="card-body bg-light">
+            <h5 class="card-title text-primary">{{ statut.libelleStatus }}</h5>
+            <ul class="list-unstyled">
+                <li><strong>Référence statut :</strong> {{ statut.idStatus }}</li>
+                <li><strong>Nom statut :</strong> {{ statut.libelleStatus }}</li>
+            </ul>
+        </div>
+        <div class="card-footer text-center bg-white border-0">
+            <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{% url 'statut_chng' statut.idStatus %}'">Modifier</button>
+            <button onclick="window.location.href='{% url 'dlt_statut' statut.idStatus %}';" class="btn btn-outline-danger">Supprimer</button>
+        </div>
+    </div>
+
+     <div class="card mb-4 mt-2 shadow-sm border-0">
+        <div class="card-header bg-dark text-white">
+            <h4>Ce statut contient <strong>{{ statut.nb_produits }}</strong> produit(s)</h4>
+        </div>
+        <div class="card-body bg-light">
+            <div class="row">
+                {% if prdts %}
+                    {% for prdt in prdts %}
+                        <div class="col-sm-3">
+                            <div class="card mb-2 text-center border-0 shadow-sm">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="card-title">{{ prdt.intituleProd }}</h5>
+                                </div>
+                                <div class="card-body bg-white">
+                                    <a href="{% url 'dtl_prdt' prdt.refProd %}" class="btn btn-outline-primary mt-2">Détails</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">Aucun produit trouvé pour cette catégorie.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
