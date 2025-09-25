@@ -54,5 +54,8 @@
                 {% endif %}
             </div>
         </div>
+        <div class="card-footer text-center bg-white border-0">
+            <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{% url 'crt_contenir' rayon.idRayon %}'">Ajouter un produit</button>
+        </div>
     </div>
 {% endblock %}

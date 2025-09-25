@@ -236,6 +236,8 @@ class StatutDetailView(DetailView):
         return context
 
 
+
+
 class ConnectView(LoginView):
     template_name = 'monApp/page_login.html'
 
@@ -314,6 +316,26 @@ class StatutCreateView(CreateView):
         stat = form.save()
         return redirect('dtl_statut', pk=stat.idStatus)
 
+@method_decorator(login_required, name='dispatch')
+class ContenirCreateView(CreateView):
+    model = Contenir
+    form_class = ContenirForm
+    template_name = "monApp/Create/contenir.html"
+    success_url = reverse_lazy('lst_rayons')
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['rayon'] = self.kwargs.get('pk')
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['rayon_id'] = self.kwargs.get('pk')
+        return context
+    
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        contenir = form.save()
+        return redirect('dtl_rayon', pk=contenir.rayon.idRayon)
 
 # Views UPDATE
 @method_decorator(login_required, name='dispatch')
