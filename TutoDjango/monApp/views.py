@@ -213,7 +213,7 @@ class StatutListView(ListView):
     def get_queryset(self):
         query = self.request.GET.get('search')
         if query:
-            return Statut.objects.prefetch_related('produits_status').filter(libelleStatus__icontains=query).annotate(nb_produits=Count('produits_status'))
+            return Statut.objects.filter(libelleStatus__icontains=query).prefetch_related('produits_status').annotate(nb_produits=Count('produits_status'))
         return Statut.objects.prefetch_related('produits_status').annotate(nb_produits=Count('produits_status'))
 
     def get_context_data(self, **kwargs):
