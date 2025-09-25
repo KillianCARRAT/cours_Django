@@ -91,6 +91,14 @@ class ProduitListView(ListView):
     context_object_name = "produits"
 
     def get_queryset(self):
+        # Surcouche pour filtrer les résultats en fonction de la recherche
+        # Récupérer le terme de recherche depuis la requête GET
+        query = self.request.GET.get('search')
+        if query:
+            return Produit.objects.filter(intituleProd__icontains=query).select_related('categorie').select_related('status')
+
+        # Si aucun terme de recherche, retourner tous les produits
+        # Charge les catégories en même temps
         return Produit.objects.select_related('categorie').select_related('status').order_by("prixUnitaireProd")
 
     def get_context_data(self, **kwargs):
@@ -115,6 +123,9 @@ class CategorieListView(ListView):
     context_object_name = "categories"
 
     def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return Categorie.objects.filter(nomCat__icontains=query).annotate(nb_produits=Count('produits_categorie'))
         # Annoter chaque catégorie avec le nombre de produits liés
         return Categorie.objects.annotate(nb_produits=Count('produits_categorie'))
 
@@ -144,6 +155,11 @@ class RayonListView(ListView):
     context_object_name = "rayons"
 
     def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return Rayon.objects.prefetch_related(
+                    Prefetch("contenir_rayon", queryset=Contenir.objects.select_related("produit"))
+                    ).filter(nomRayon__icontains=query)
         # Précharge tous les "contenir" de chaque rayon,
         # et en même temps le produit de chaque contenir
         return Rayon.objects.prefetch_related(
@@ -195,6 +211,9 @@ class StatutListView(ListView):
     context_object_name = "statuts"
 
     def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return Statut.objects.prefetch_related('produits_status').filter(libelleStatus__icontains=query).annotate(nb_produits=Count('produits_status'))
         return Statut.objects.prefetch_related('produits_status').annotate(nb_produits=Count('produits_status'))
 
     def get_context_data(self, **kwargs):
