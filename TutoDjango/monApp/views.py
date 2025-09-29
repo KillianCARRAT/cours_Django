@@ -394,7 +394,6 @@ class ContenirUpdateView(UpdateView):
         return context
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        print(form.cleaned_data)
         if form.cleaned_data['Qte'] <= 0:
             idRayon = form.cleaned_data['rayon'].idRayon
             idProd = form.cleaned_data['produit'].refProd

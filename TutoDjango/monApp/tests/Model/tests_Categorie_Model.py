@@ -14,11 +14,11 @@ class CategorieModelTest(TestCase):
         self.assertEqual(str(self.ctgr), "CategoriePourTest")
 
     def test_categorie_updating(self):
-        self.ctgr.nomCat = "CategoriePourTest"
+        self.ctgr.nomCat = "CategoriePourTestTest"
         self.ctgr.save()
         # Récupérer l'objet mis à jour
         updated_ctgr = Categorie.objects.get(idCat=self.ctgr.idCat)
-        self.assertEqual(updated_ctgr.nomCat, "CategoriePourTest")
+        self.assertEqual(updated_ctgr.nomCat, "CategoriePourTestTest")
 
     def test_categorie_deletion(self):
         self.ctgr.delete()
