@@ -12,13 +12,23 @@
         <div class="card-body bg-light">
             <h5 class="card-title text-primary">{{ rayon.nomRayon }}</h5>
             <ul class="list-unstyled">
-                <li><strong>Référence rayon :</strong> {{ rayon.idRayon }}</li>
-                <li><strong>Nom rayon :</strong> {{ rayon.nomRayon }}</li>
+                <li>
+                    <strong>Référence rayon :</strong> {{ rayon.idRayon }}
+                </li>
+                <li>
+                    <strong>Nom rayon :</strong> {{ rayon.nomRayon }}
+                </li>
             </ul>
         </div>
         <div class="card-footer text-center bg-white border-0">
-            <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{% url 'rayon_chng' rayon.idRayon %}'">Modifier</button>
-            <button onclick="window.location.href='{% url 'dlt_rayon' rayon.idRayon %}';" class="btn btn-outline-danger">Supprimer</button>
+            <button type="button" class="btn btn-outline-primary"
+                    onclick="window.location.href='{% url 'rayon_chng' rayon.idRayon %}'">
+                Modifier
+            </button>
+            <button onclick="window.location.href='{% url 'dlt_rayon' rayon.idRayon %}';"
+                    class="btn btn-outline-danger">
+                Supprimer
+            </button>
         </div>
     </div>
 
@@ -35,16 +45,40 @@
                     {% for data in prdts_dt %}
                         <div class="col-sm-3">
                             <div class="card mb-2 text-center border-0 shadow-sm">
-                                <div class="card-header bg-secondary text-white">
-                                    <h5 class="card-title">{{ data.produit.intituleProd }}</h5>
+                                <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">{{ data.produit.intituleProd }}</h5>
+                                    <button type="button" class="btn hidden"
+                                            onclick="window.location.href='{% url 'dtl_prdt' data.produit.refProd %}'">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+                                        </svg>
+                                    </button>
                                 </div>
                                 <div class="card-body bg-white">
                                     <ul class="list-unstyled">
-                                        <li>Prix unitaire : <span class="text-success">{{ data.prix_unitaire }} €</span></li>
-                                        <li>Quantité : <span class="text-secondary">{{ data.qte }}</span></li>
-                                        <li>Total : <span class="text-success">{{ data.total_produit }} €</span></li>
+                                        <li>
+                                            Prix unitaire :
+                                            <span class="text-success">{{ data.prix_unitaire }} €</span>
+                                        </li>
+                                        <li>
+                                            Quantité :
+                                            <span class="text-secondary">{{ data.qte }}</span>
+                                        </li>
+                                        <li>
+                                            Total :
+                                            <span class="text-success">{{ data.total_produit }} €</span>
+                                        </li>
                                     </ul>
-                                    <a href="{% url 'dtl_prdt' data.produit.refProd %}" class="btn btn-outline-primary mt-2">Détails</a>
+                                    <button type="button" class="btn btn-outline-primary mt-2"
+                                            onclick="window.location.href='{% url 'contenir_chng' data.id_contenir %}'">
+                                        Modifier
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger mt-2"
+                                            onclick="window.location.href='{% url 'dlt_contenir' data.id_contenir %}'">
+                                        Supprimer
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +89,10 @@
             </div>
         </div>
         <div class="card-footer text-center bg-white border-0">
-            <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{% url 'crt_contenir' rayon.idRayon %}'">Ajouter un produit</button>
+            <button type="button" class="btn btn-outline-primary"
+                    onclick="window.location.href='{% url 'crt_contenir' rayon.idRayon %}'">
+                Ajouter un produit
+            </button>
         </div>
     </div>
 {% endblock %}

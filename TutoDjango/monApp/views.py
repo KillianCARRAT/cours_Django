@@ -195,7 +195,8 @@ class RayonDetailView(DetailView):
             prdts_dt.append({ 'produit': contenir.produit,
                                 'qte': contenir.Qte,
                                 'prix_unitaire': contenir.produit.prixUnitaireProd,
-                                'total_produit': total_produit})
+                                'total_produit': total_produit,
+                                'id_contenir': contenir.id})
             total_rayon += total_produit
             total_nb_produit += contenir.Qte
 
@@ -378,6 +379,20 @@ class StatutUpdateView(UpdateView):
         stat = form.save()
         return redirect('dtl_statut', pk=stat.idStatus)
 
+@method_decorator(login_required, name='dispatch')
+class ContenirUpdateView(UpdateView):
+    model = Contenir
+    form_class = ContenirForm
+    template_name = "monApp/Update/contenir.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['rayon_id'] = self.object.rayon.idRayon
+        return context
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        contenir = form.save()
+        return redirect('dtl_rayon', pk=contenir.rayon.idRayon)
 
 # Views DELETE
 @method_decorator(login_required, name='dispatch')
@@ -403,3 +418,9 @@ class StatutDeleteView(DeleteView):
     model = Statut
     template_name = "monApp/Delete/statut.html"
     success_url = reverse_lazy('lst_statuts')
+
+@method_decorator(login_required, name='dispatch')
+class ContenirDeleteView(DeleteView):
+    model = Contenir
+    template_name = "monApp/Delete/contenir.html"
+    success_url = reverse_lazy('lst_rayons')

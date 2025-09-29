@@ -5,6 +5,6 @@
 {% csrf_token %}
 {{ form.as_p }}
 <button type="submit" class="btn btn-success">Valider</button>
-<button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'dtl_rayon' rayon.idRayon %}'">Annuler</button>
+<button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'dtl_rayon' rayon_id %}'">Annuler</button>
 </form>
 {% endblock %}

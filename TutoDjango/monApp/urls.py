@@ -42,6 +42,8 @@ urlpatterns = [
 
         # Contenir
         path("rayon/<int:pk>/contenir", views.ContenirCreateView.as_view(), name="crt_contenir"),
+        path("contenir/<int:pk>/update/", views.ContenirUpdateView.as_view(), name="contenir_chng"),
+        path("contenir/<int:pk>/delete/", views.ContenirDeleteView.as_view(), name="dlt_contenir"),
 
 
         # Authentication
