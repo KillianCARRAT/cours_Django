@@ -335,6 +335,9 @@ class ContenirCreateView(CreateView):
         return context
     
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        if form.cleaned_data['Qte'] <= 0:
+            form.add_error('Qte', 'La quantité doit être supérieur à 0.')
+            return self.form_invalid(form)
         contenir = form.save()
         return redirect('dtl_rayon', pk=contenir.rayon.idRayon)
 
@@ -391,6 +394,12 @@ class ContenirUpdateView(UpdateView):
         return context
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        print(form.cleaned_data)
+        if form.cleaned_data['Qte'] <= 0:
+            idRayon = form.cleaned_data['rayon'].idRayon
+            idProd = form.cleaned_data['produit'].refProd
+            Contenir.objects.get(rayon__idRayon=idRayon, produit__refProd=idProd).delete()
+            return redirect('dtl_rayon', pk=idRayon)
         contenir = form.save()
         return redirect('dtl_rayon', pk=contenir.rayon.idRayon)
 
