@@ -36,8 +36,8 @@ class CategorieUrlsTest(TestCase):
 
     def setUp(self):
         self.ctgr = Categorie.objects.create(nomCat="CategoriePourTest")
-        self.user = User.objects.create_user(username='testuser', password='secret')
-        self.client.login(username='testuser', password='secret')
+        self.user = User.objects.create_user(username='admin', password='admin')
+        self.client.login(username='admin', password='admin')
 
     def test_categorie_detail_response_code(self):
         url = reverse('dtl_categorie', args=[self.ctgr.idCat]) # idCat existant
@@ -78,7 +78,7 @@ class CategorieUrlsTest(TestCase):
         # Statut 302 = redirection
         self.assertEqual(response.status_code, 302)
         # Redirection vers la vue de detail
-        self.assertRedirects(response, '/monApp/categorie/2/')
+        self.assertRedirects(response, '/monApp/categories/2/')
 
     def test_redirect_after_categorie_updating(self):
         response = self.client.post(
@@ -88,10 +88,10 @@ class CategorieUrlsTest(TestCase):
         # Statut 302 = redirection
         self.assertEqual(response.status_code, 302)
         # Redirection vers la vue de detail
-        self.assertRedirects(response, f'/monApp/categorie/{self.ctgr.idCat}/')
+        self.assertRedirects(response, f'/monApp/categories/{self.ctgr.idCat}/')
 
     def test_redirect_after_categorie_deletion(self):
-        response = self.client.post(reverse('dtl_categorie', args=[self.ctgr.pk]))
+        response = self.client.post(reverse('dlt_categorie', args=[self.ctgr.pk]))
         # Vérifie qu'on a bien une redirection
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('lst_categories'))
