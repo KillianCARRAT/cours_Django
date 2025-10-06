@@ -16,22 +16,6 @@ from django.db.models import Count, Prefetch
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-# Create your views here.
-from django.http import HttpResponse, Http404
-
-def listProduits(request):
-    return render(request, 'monApp/Read/list/produits.html', {'produits': Produit.objects.all()})
-
-def listCategories(request):
-    return render(request, 'monApp/Read/list/categories.html', {'categories': Categorie.objects.all()})
-
-def listStatus(request):
-    return render(request, 'monApp/Read/list/statuts.html', {'statuts': Statut.objects.all()})
-
-def listRayons(request):
-    return render(request, 'monApp/Read/list/rayons.html', {'rayons': Rayon.objects.all()})
-
-
 # Vue généric
 class HomeView(TemplateView):
     template_name = "monApp/page_home.html"
@@ -235,8 +219,6 @@ class StatutDetailView(DetailView):
         context['titremenu'] = "Détail du statut"
         context['prdts'] = self.object.produits_status.all()
         return context
-
-
 
 
 class ConnectView(LoginView):
