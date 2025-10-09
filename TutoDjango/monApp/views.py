@@ -9,6 +9,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from django.http import HttpResponse
 
 from django.core.mail import send_mail
 from django.db.models import Count, Prefetch
@@ -230,7 +231,7 @@ class ConnectView(LoginView):
         user = authenticate(username=lgn, password=pswrd)
         if user is not None and user.is_active:
             login(request, user)
-            return render(request, 'monApp/page_home.html', {'param': lgn, 'message': "You're connected"})
+            return render(request, 'monApp/page_home.html', {'param': lgn, 'message': "You are connected"})
         else:
             return render(request, 'monApp/page_register.html')
 
@@ -242,6 +243,11 @@ class RegisterView(TemplateView):
         username = request.POST.get('username', False)
         mail = request.POST.get('mail', False)
         password = request.POST.get('password', False)
+        if not username or not mail or not password:
+            # Impossible de créer le user, champ vide
+            return render(request, 'monApp/page_register.html', {
+                'error': "Tous les champs sont obligatoires."
+            })
         user = User.objects.create_user(username, mail, password)
         user.save()
         if user is not None and user.is_active:

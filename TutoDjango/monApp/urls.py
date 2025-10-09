@@ -4,11 +4,11 @@ from django.views.generic import *
 
 urlpatterns = [
         # Vue Généric
-        path("home", TemplateView.as_view(template_name="monApp/page_home.html")),
+        path("home", TemplateView.as_view(template_name="monApp/page_home.html")), # pas test
         path("home/", views.HomeView.as_view(), name="home"),
-        path("home/<str:param>", views.HomeView.as_view()),
+        path("home/<str:param>", views.HomeView.as_view(), name="home_with_param"),
 
-        path("about/", views.AboutView.as_view()),
+        path("about/", views.AboutView.as_view(), name="about"),
         path("contact/", views.ContactView, name="contact"),
         path("email-sent/", views.EmailSentView.as_view(), name="email-sent"),
 

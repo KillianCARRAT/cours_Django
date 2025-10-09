@@ -35,7 +35,7 @@ class ProduitUrlsTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def setUp(self):
-        self.produit = Produit.objects.create(intituleProd="ProduitPourTest", prixUnitaireProd=10.00, dateFabProd="2023-01-01")
+        self.produit = Produithome.objects.create(intituleProd="ProduitPourTest", prixUnitaireProd=10.00, dateFabProd="2023-01-01")
         self.user = User.objects.create_user(username='admin', password='admin')
         self.client.login(username='admin', password='admin')
 
