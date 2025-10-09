@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.views.generic import *
 
@@ -50,4 +50,7 @@ urlpatterns = [
         path('login/', views.ConnectView.as_view(), name='login'),
         path('register/', views.RegisterView.as_view(), name='register'),
         path('logout/', views.DisconnectView.as_view(), name='logout'),
+        
+        # API
+        path("api/", include("monApp.api.urls")), # routes API regroupées
 ]
