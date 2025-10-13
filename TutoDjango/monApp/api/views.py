@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from monApp.models import Categorie, Produit, Rayon, Statut, Contenir
 from .serializers import CategorieSerializer, ProduitSerializer, RayonSerializer, StatutSerializer, ContenirSerializer
 
@@ -43,3 +43,25 @@ class ContenirDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Produit.objects.all()
     serializer_class = ProduitSerializer
 
+
+
+# ViewSets
+class CategorieViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Categorie.objects.all()
+    serializer_class = CategorieSerializer
+
+class ProduitViewSet(viewsets.ModelViewSet):
+    queryset = Produit.objects.all()
+    serializer_class = ProduitSerializer
+
+class RayonViewSet(viewsets.ModelViewSet):
+    queryset = Rayon.objects.all()
+    serializer_class = RayonSerializer
+
+class StatutViewSet(viewsets.ModelViewSet):
+    queryset = Statut.objects.all()
+    serializer_class = StatutSerializer
+
+class ContenirViewSet(viewsets.ModelViewSet):
+    queryset = Contenir.objects.all()
+    serializer_class = ContenirSerializer
