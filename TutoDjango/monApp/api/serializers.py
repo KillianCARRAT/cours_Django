@@ -23,6 +23,11 @@ class CategorieSerializer(serializers.ModelSerializer):
         serializer = ProduitSerializer(queryset, many=True)
         return serializer.data
 
+class CategorieSerializerList(serializers.ModelSerializer):
+    class Meta:
+        model = Categorie
+        fields = ["idCat", "nomCat"]
+
 class RayonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rayon
