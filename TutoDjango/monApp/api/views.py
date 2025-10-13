@@ -3,6 +3,8 @@ from rest_framework.pagination import PageNumberPagination
 from monApp.models import *
 from .serializers import *
 from datetime import datetime
+from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAdminAuthenticated
 
 # List and Create
 # class CategorieAPIView(generics.ListCreateAPIView):
@@ -59,6 +61,8 @@ class CategorieViewSet(MultipleSerializerMixin, viewsets.ModelViewSet ):
     #pagination_class = SmallResultsSetPagination
     serializer_class = CategorieSerializerList
     detail_serializer_class = CategorieSerializer
+    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminAuthenticated]
 
     def get_queryset(self):
         return Categorie.objects.all()

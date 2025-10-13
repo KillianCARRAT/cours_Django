@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'django_extensions',
     'rest_framework',
+    'rest_framework_simplejwt', 
 ]
 
 MIDDLEWARE = [
@@ -146,8 +148,14 @@ LOGIN_URL = '/monApp/login/'
 LOGIN_REDIRECT_URL = '/monApp/home/'
 
 REST_FRAMEWORK = {
-# style de pagination
-'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.LimitOffsetPagination',
-# nombre de réponses par page
-'PAGE_SIZE': 1
+    # style de pagination
+    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.LimitOffsetPagination',
+    # nombre de réponses par page
+    'PAGE_SIZE': 1,
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.SessionAuthentication', ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
