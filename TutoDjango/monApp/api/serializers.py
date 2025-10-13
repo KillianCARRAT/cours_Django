@@ -24,4 +24,4 @@ class StatutSerializer(serializers.ModelSerializer):
 class ContenirSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contenir
-        fields = ["id", "produit", "rayon", "quantite"]
+        fields = ["produit", "rayon", "Qte"]

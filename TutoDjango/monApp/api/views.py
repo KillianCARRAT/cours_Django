@@ -21,3 +21,25 @@ class StatutAPIView(generics.ListCreateAPIView):
 class ContenirAPIView(generics.ListCreateAPIView):
     queryset = Contenir.objects.all()
     serializer_class = ContenirSerializer
+
+# Details
+class CategorieDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Categorie.objects.all()
+    serializer_class = CategorieSerializer
+
+class ProduitDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Produit.objects.all()
+    serializer_class = ProduitSerializer
+
+class RayonDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Rayon.objects.all()
+    serializer_class = RayonSerializer  
+
+class StatutDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Statut.objects.all()
+    serializer_class = StatutSerializer
+
+class ContenirDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Produit.objects.all()
+    serializer_class = ProduitSerializer
+
