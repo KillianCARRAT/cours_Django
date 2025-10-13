@@ -144,3 +144,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_URL = '/monApp/login/'
 
 LOGIN_REDIRECT_URL = '/monApp/home/'
+
+REST_FRAMEWORK = {
+# style de pagination
+'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.LimitOffsetPagination',
+# nombre de réponses par page
+'PAGE_SIZE': 1
+}

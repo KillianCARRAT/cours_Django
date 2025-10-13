@@ -1,8 +1,10 @@
 from rest_framework import generics, viewsets
+from rest_framework.pagination import PageNumberPagination
 from monApp.models import Categorie, Produit, Rayon, Statut, Contenir
 from .serializers import CategorieSerializer, ProduitSerializer, RayonSerializer, StatutSerializer, ContenirSerializer
 from datetime import datetime
 
+# List and Create
 class CategorieAPIView(generics.ListCreateAPIView):
     queryset = Categorie.objects.all()
     serializer_class = CategorieSerializer
@@ -46,8 +48,15 @@ class ContenirDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 
+class SmallResultsSetPagination(PageNumberPagination):
+    page_size = 2 # minimum de résultats par page
+    page_size_query_param = 'page_size'
+    max_page_size = 4 # maximum de résultats par page
+
 # ViewSets
 class CategorieViewSet(viewsets.ModelViewSet):
+    # pagination_class = None
+    pagination_class = SmallResultsSetPagination
     queryset = Categorie.objects.all().prefetch_related('produits_categorie')
     serializer_class = CategorieSerializer
 
