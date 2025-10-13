@@ -47,8 +47,8 @@ class ContenirDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # ViewSets
-class CategorieViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Categorie.objects.all()
+class CategorieViewSet(viewsets.ModelViewSet):
+    queryset = Categorie.objects.all().prefetch_related('produits_categorie')
     serializer_class = CategorieSerializer
 
 class ProduitViewSet(viewsets.ModelViewSet):
@@ -63,12 +63,12 @@ class ProduitViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(dateFabProd__gt=datefilter)
         return queryset
 
-class RayonViewSet(viewsets.ModelViewSet):
+class RayonViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Rayon.objects.all()
     serializer_class = RayonSerializer
 
 class StatutViewSet(viewsets.ModelViewSet):
-    queryset = Statut.objects.all()
+    queryset = Statut.objects.all().prefetch_related("produits_status")
     serializer_class = StatutSerializer
 
 class ContenirViewSet(viewsets.ModelViewSet):
