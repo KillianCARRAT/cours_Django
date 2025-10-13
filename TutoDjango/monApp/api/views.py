@@ -1,6 +1,7 @@
 from rest_framework import generics, viewsets
 from monApp.models import Categorie, Produit, Rayon, Statut, Contenir
 from .serializers import CategorieSerializer, ProduitSerializer, RayonSerializer, StatutSerializer, ContenirSerializer
+from datetime import datetime
 
 class CategorieAPIView(generics.ListCreateAPIView):
     queryset = Categorie.objects.all()
@@ -51,8 +52,16 @@ class CategorieViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CategorieSerializer
 
 class ProduitViewSet(viewsets.ModelViewSet):
-    queryset = Produit.objects.all()
+    # queryset = Produit.objects.all()
     serializer_class = ProduitSerializer
+
+    def get_queryset(self):
+        queryset = Produit.objects.all()
+        datefilter = self.request.GET.get('datefilter')
+        if datefilter is not None:
+            datefilter=datetime.strptime(datefilter, "%d/%m/%Y")
+            queryset = queryset.filter(dateFabProd__gt=datefilter)
+        return queryset
 
 class RayonViewSet(viewsets.ModelViewSet):
     queryset = Rayon.objects.all()
