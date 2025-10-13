@@ -33,13 +33,32 @@ class RayonSerializer(serializers.ModelSerializer):
         model = Rayon
         fields = ["idRayon", "nomRayon"]
 
-class StatutSerializer(serializers.ModelSerializer):
-    produits_status = ProduitSerializer(many=True)
+class StatusSerializerList(serializers.ModelSerializer):
+    class Meta:
+        model = Statut
+        fields = ["idStatus", "libelleStatus"]
+
+class StatusSerializer(serializers.ModelSerializer):
+    produits_status = serializers.SerializerMethodField()
+
     class Meta:
         model = Statut
         fields = ["idStatus", "libelleStatus", "produits_status"]
+
+    def get_produits_status(self,instance):
+        queryset = instance.produits_status.all()
+        serializer = ProduitSerializer(queryset, many=True)
+        return serializer.data
 
 class ContenirSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contenir
         fields = ["produit", "rayon", "Qte"]
+
+
+class MultipleSerializerMixin:
+    detail_serializer_class = None
+    def get_serializer_class(self):
+        if self.action == 'retrieve' and self.detail_serializer_class is not None:
+            return self.detail_serializer_class
+        return super().get_serializer_class()
