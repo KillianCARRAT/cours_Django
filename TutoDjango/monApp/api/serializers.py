@@ -28,6 +28,16 @@ class CategorieSerializerList(serializers.ModelSerializer):
         model = Categorie
         fields = ["idCat", "nomCat"]
 
+    def validate_nomCat(self, value):
+        if Categorie.objects.filter(nomCat=value).exists():
+            raise serializers.ValidationError('La categorie existe déjà')
+        return value
+
+    def validate(self, data):
+        if len(data['nomCat'])>100 :
+            raise serializers.ValidationError('Pb question.')
+        return data
+
 class RayonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rayon
