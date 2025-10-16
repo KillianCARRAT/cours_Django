@@ -88,7 +88,7 @@ class ProduitListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProduitListView, self).get_context_data(**kwargs)
-        context['titremenu'] = "Liste de mes produits"
+        context['titremenu'] = "Liste des produits"
         return context
 
 class ProduitDetailView(DetailView):
@@ -116,7 +116,7 @@ class CategorieListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CategorieListView, self).get_context_data(**kwargs)
-        context['titremenu'] = "Liste de mes catégories"
+        context['titremenu'] = "Liste des catégories"
         return context
 
 class CategorieDetailView(DetailView):
@@ -153,7 +153,7 @@ class RayonListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(RayonListView, self).get_context_data(**kwargs)
-        context['titremenu'] = "Liste de mes rayons"
+        context['titremenu'] = "Liste des rayons"
         ryns_dt = []
         for rayon in context['rayons']:
             total = 0
@@ -204,7 +204,7 @@ class StatutListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(StatutListView, self).get_context_data(**kwargs)
-        context['titremenu'] = "Liste de mes statuts"
+        context['titremenu'] = "Liste des statuts"
         return context
 
 class StatutDetailView(DetailView):
@@ -263,13 +263,19 @@ class DisconnectView(TemplateView):
         logout(request)
         return render(request, self.template_name)
 
+@method_decorator(login_required, name='dispatch')
 class FavoriteProductsViews(ListView):
     model = Produit
     template_name = "monApp/Read/list/favorite_products.html"
     context_object_name = "produits"
 
     def get_queryset(self):
-        return Produit.objects.filter(favorite_produit__user=self.request.user).select_related('categorie').select_related('status')
+        query = self.request.GET.get('search')
+        favoris = FavoriteProduct.objects.filter(user=self.request.user).values_list('produit_id', flat=True)
+        qs = Produit.objects.filter(refProd__in=favoris).select_related('categorie').select_related('status')
+        if query:
+            qs = qs.filter(intituleProd__icontains=query)
+        return qs.order_by("prixUnitaireProd")
 
     def get_context_data(self, **kwargs):
         context = super(FavoriteProductsViews, self).get_context_data(**kwargs)

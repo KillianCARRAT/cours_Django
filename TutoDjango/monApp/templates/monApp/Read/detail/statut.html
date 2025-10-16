@@ -1,10 +1,15 @@
 {% extends 'monApp/base.html' %}
 
 {% block menu %}
-    <h1>{{ titremenu }}</h1>
+    <h1 class="display-5 text-center text-primary">{{ titremenu }}</h1>
 {% endblock %}
 
 {% block contenu %}
+<div class="mb-3">
+    <a href="{% url 'lst_statuts' %}" class="btn btn-outline-secondary">
+        &larr; Retour à la liste des statuts
+    </a>
+</div>
     <div class="card mb-4 shadow-sm border-0">
         <div class="card-header bg-dark text-white">
             <h4>Détail du statut</h4>

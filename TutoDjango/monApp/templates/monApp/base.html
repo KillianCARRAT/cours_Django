@@ -31,21 +31,26 @@
     <li class="nav-item">
     <a class="nav-link" href="{% url 'lst_statuts' %}">Statuts</a>
     </li>
-    <li class="nav-item">
-    <a class="nav-link" href="{% url 'lst_favorites' %}">Favorite Product</a>
-    </li>
     {% if user.is_authenticated %}
-<li class="nav-item">
-<a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
-</li>
-{%else%}
-<li class="nav-item">
-<a class="nav-link" href="{% url 'login' %}">Connexion</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url 'register' %}">Inscription</a>
-</li>
-{%endif%}
+    <li class="nav-item">
+    <a class="nav-link" href="{% url 'lst_favorites' %}">My Favorite Product</a>
+    </li>
+    {% endif %}
+</ul>
+<ul class="navbar-nav ms-auto">
+    {% if user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+    </li>
+    {% else %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'register' %}">Inscription</a>
+    </li>
+    {% endif %}
+</ul>
     </ul>
     </div>
     </nav>
@@ -65,3 +70,4 @@
 </body>
 
 </html>
+
