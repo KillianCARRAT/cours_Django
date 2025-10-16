@@ -1,5 +1,6 @@
 from datetime import date
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Categorie(models.Model):
@@ -48,3 +49,15 @@ class Contenir(models.Model):
     def __str__(self):
         return f"{self.produit} dans {self.rayon} (Qte: {self.Qte})"
     
+
+
+
+class FavoriteProduct(models.Model):
+    produit = models.ForeignKey(Produit, on_delete=models.CASCADE, related_name="favorite_produit")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="favorite_user")
+
+    class Meta:
+        unique_together = ('produit', 'user')
+
+    def __str__(self):
+        return f"{self.user.username} aime {self.produit.intituleProd}"

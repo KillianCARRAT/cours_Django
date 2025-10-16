@@ -45,6 +45,11 @@ urlpatterns = [
         path("contenir/<int:pk>/update/", views.ContenirUpdateView.as_view(), name="contenir_chng"),
         path("contenir/<int:pk>/delete/", views.ContenirDeleteView.as_view(), name="dlt_contenir"),
 
+        # Favorite Products
+        path("favorites/", views.FavoriteProductsViews.as_view(), name="lst_favorites"),
+        path("produit/<int:pk>/favorite", views.AddFavoriteroductsView.as_view(), name="add_favorite"),
+        path("produit/<int:pk>/delete_favorite", views.DeleteFavoriteProductsView.as_view(), name="delete_favorite"),
+
 
         # Authentication
         path('login/', views.ConnectView.as_view(), name='login'),

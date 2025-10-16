@@ -31,6 +31,9 @@
     <li class="nav-item">
     <a class="nav-link" href="{% url 'lst_statuts' %}">Statuts</a>
     </li>
+    <li class="nav-item">
+    <a class="nav-link" href="{% url 'lst_favorites' %}">Favorite Product</a>
+    </li>
     {% if user.is_authenticated %}
 <li class="nav-item">
 <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
