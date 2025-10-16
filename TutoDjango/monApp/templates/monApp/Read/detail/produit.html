@@ -1,17 +1,37 @@
 {% extends 'monApp/base.html' %}
 {% block menu %}
-<h1>{{titremenu}}</h1>
+    <h1 class="display-5 text-center text-primary">{{ titremenu }}</h1>
 {% endblock %}
 {% block contenu %}
-<p onclick="window.location.href='{% url 'lst_prdts' %}';" style="cursor:pointer; ">Retour à la liste des produits</p>
-<h2>{{ prdt.intituleProd }}</h2>
-<ul>
-<li>Référence produit : {{prdt.refProd }} </li>
-<li>Prix unitaire HT : {{ prdt.prixUnitaireProd }} </li>
-<li>Date de fabrication : {{ prdt.dateFabProd }} </li>
-<li>Catégorie : {{ prdt.categorie }} </li>
-<li>Statut : {{ prdt.status }}</li>
-</ul>
-<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'prdt_chng' prdt.refProd %}'">Modifier</button>
-<button onclick="window.location.href='{% url 'dlt_prdt' prdt.refProd %}';" class="btn btn-danger">Supprimer</button>
+<div class="mb-3">
+    <a href="{% url 'lst_prdts' %}" class="btn btn-outline-secondary">
+        &larr; Retour à la liste des produits
+    </a>
+</div>
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-dark text-white">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">{{ prdt.intituleProd }}</h4>
+            <button onclick="window.location.href='{% url 'add_favorite' prdt.refProd %}';" class="btn btn-outline-warning" title="Ajouter aux favoris">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                  <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div class="card-body bg-light">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Référence produit :</strong> {{ prdt.refProd }}</li>
+            <li class="list-group-item"><strong>Prix unitaire HT :</strong> <span class="text-success">{{ prdt.prixUnitaireProd }} €</span></li>
+            <li class="list-group-item"><strong>Date de fabrication :</strong> {{ prdt.dateFabProd }}</li>
+            <li class="list-group-item"><strong>Catégorie :</strong> {{ prdt.categorie }}</li>
+            <li class="list-group-item"><strong>Statut :</strong> {{ prdt.status }}</li>
+        </ul>
+    </div>
+    <div class="card-footer text-center bg-white border-0">
+        <button type="button" class="btn btn-outline-primary me-2" onclick="window.location.href='{% url 'prdt_chng' prdt.refProd %}'">Modifier</button>
+        <button onclick="window.location.href='{% url 'dlt_prdt' prdt.refProd %}';" class="btn btn-outline-danger">Supprimer</button>
+    </div>
+</div>
 {% endblock %}
+

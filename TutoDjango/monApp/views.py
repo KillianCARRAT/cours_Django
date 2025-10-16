@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Produit, Categorie, Statut, Rayon, Contenir
+from .models import Produit, Categorie, Statut, Rayon, Contenir, FavoriteProduct
 from .forms import *
 
 from django.views.generic import TemplateView, ListView, DetailView
@@ -262,6 +262,40 @@ class DisconnectView(TemplateView):
     def get(self, request, **kwargs):
         logout(request)
         return render(request, self.template_name)
+
+class FavoriteProductsViews(ListView):
+    model = Produit
+    template_name = "monApp/Read/list/favorite_products.html"
+    context_object_name = "produits"
+
+    def get_queryset(self):
+        return Produit.objects.filter(favorite_produit__user=self.request.user).select_related('categorie').select_related('status')
+
+    def get_context_data(self, **kwargs):
+        context = super(FavoriteProductsViews, self).get_context_data(**kwargs)
+        context['titremenu'] = "Liste de mes produits favoris"
+        return context
+
+class AddFavoriteroductsView(TemplateView):
+    template_name = "monApp/Read/detail/produit.html"
+
+    @method_decorator(login_required)
+    def get(self, request, **kwargs):
+        prdt = Produit.objects.get(refProd=self.kwargs.get('pk'))
+        if prdt.favorite_produit.filter(user=request.user).exists():
+            prdt.favorite_produit.filter(user=request.user).delete()
+        else:
+            FavoriteProduct.objects.create(user=request.user, produit=prdt)
+        return redirect('dtl_prdt', pk=prdt.refProd)
+    
+class DeleteFavoriteProductsView(TemplateView):
+
+    @method_decorator(login_required)
+    def get(self, request, **kwargs):
+        prdt = Produit.objects.get(refProd=self.kwargs.get('pk'))
+        if prdt.favorite_produit.filter(user=request.user).exists():
+            prdt.favorite_produit.filter(user=request.user).delete()
+        return redirect('lst_favorites')
 
 # Views CRUD
 # Views CREATE

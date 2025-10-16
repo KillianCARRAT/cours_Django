@@ -1,0 +1,63 @@
+{% extends 'monApp/base.html' %}
+{% block menu %}
+    <h1 class="display-5 text-center text-primary">{{ titremenu }}</h1>
+{% endblock %}
+{% block contenu %}
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-dark text-white">
+        <h4 class="mb-0">Mes produits favoris</h4>
+    </div>
+    <div class="card-body bg-light">
+        <!-- Barre de recherche -->
+        <form method="GET" action="" class="mb-3 row g-2">
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="search" placeholder="Tapez ici votre recherche"
+                       value="{{ request.GET.search }}">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success w-100">Rechercher</button>
+            </div>
+        </form>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom produit</th>
+                        <th>Prix unitaire</th>
+                        <th>Date fabrication</th>
+                        <th>Catégorie</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prdt in produits %}
+                    <tr class="text-center">
+                        <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.refProd }}</td>
+                        <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.intituleProd }}</td>
+                        <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.prixUnitaireProd }}</td>
+                        <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.dateFabProd }}</td>
+                        <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.categorie }}</td>
+                        <td onclick="window.location.href='{% url 'dtl_prdt' prdt.refProd %}';" style="cursor:pointer;">{{ prdt.status }}</td>
+                        <td>
+                            <button onclick="window.location.href='{% url 'delete_favorite' prdt.refProd %}';"
+                                    class="btn btn-outline-warning" title="Retirer des favoris">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-muted text-center">Aucun produit favori trouvé.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
